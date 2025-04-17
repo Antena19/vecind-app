@@ -1,0 +1,53 @@
+.splash-container {
+    --background: #2C3E50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .app-logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+  
+  .app-name {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+  
+  .app-slogan {
+    color: #ccc;
+    font-size: 14px;
+    margin: 0.5rem 0 0;
+    letter-spacing: 0.5px;
+  }
+  
+  .enter-button-container {
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto;
+    
+    ion-button {
+      --background: #00897B;
+      --border-radius: 4px;
+      --color: white;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }

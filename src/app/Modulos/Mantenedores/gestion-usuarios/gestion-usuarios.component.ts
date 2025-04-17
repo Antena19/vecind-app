@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Usuario } from 'src/app/Modelos/Usuario';
-import { MantenedoresService } from 'src/app/Services/mantenedores.service';
+import { MantenedoresService } from 'src/app/services/mantenedores.service';
 
 @Component({
   selector: 'app-gestion-usuarios',

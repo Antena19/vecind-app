@@ -1,16 +1,38 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/inbox',
+    redirectTo: 'inicio',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+    path: 'inicio',
+    loadComponent: () => import('./modulos/inicio/inicio.page').then(m => m.InicioPage)
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./modulos/home/home.page').then(m => m.HomePage),
+    canActivate: [AuthGuard]
+  },
+  
+  {
+    path: 'login',
+    loadComponent: () => import('./modulos/login/login.page').then(m => m.LoginPage)
+  },
+  /*
+  {
+    path: 'registro',
+    loadChildren: () => import('./modulos/registro/registro.module').then(m => m.RegistroPageModule)
+  },
+  {
+    path: 'recuperar-password',
+    loadChildren: () => import('./modulos/recuperar-password/recuperar-password.module').then(m => m.RecuperarPasswordPageModule)
+  },
+  */
+
 ];
 
 @NgModule({
@@ -19,4 +41,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
