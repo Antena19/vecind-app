@@ -22,11 +22,11 @@ const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./modulos/login/login.page').then(m => m.LoginPage)
   },
-  /*
   {
     path: 'registro',
-    loadChildren: () => import('./modulos/registro/registro.module').then(m => m.RegistroPageModule)
+    loadComponent: () => import('./modulos/registro/registro-vecino/registro-vecino.component').then(m => m.RegistroVecinoComponent)
   },
+  /*
   {
     path: 'recuperar-password',
     loadChildren: () => import('./modulos/recuperar-password/recuperar-password.module').then(m => m.RecuperarPasswordPageModule)
