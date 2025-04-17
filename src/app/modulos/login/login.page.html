@@ -1,0 +1,67 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Portal Puerto Montt - JJVV</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+    <div class="logo-container ion-text-center">
+      <h1>Junta de Vecinos</h1>
+      <h2>Portal Puerto Montt</h2>
+      <p>Accede a tu cuenta para conectar con tu comunidad</p>
+    </div>
+  
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <ion-card>
+        <ion-card-content>
+          <div class="rut-container">
+            <ion-item>
+              <ion-label position="floating">RUT (sin puntos)</ion-label>
+              <ion-input type="number" formControlName="rut" inputmode="numeric"></ion-input>
+            </ion-item>
+            <div class="rut-separator">-</div>
+            <ion-item class="dv-item">
+              <ion-label position="floating">DV</ion-label>
+              <ion-input type="text" formControlName="dv_rut" maxlength="1"></ion-input>
+            </ion-item>
+          </div>
+  
+          <div *ngIf="loginForm.get('rut')?.invalid && loginForm.get('rut')?.touched" class="error-message">
+            <span *ngIf="loginForm.get('rut')?.errors?.['required']">El RUT es obligatorio</span>
+          </div>
+  
+          <div *ngIf="loginForm.get('dv_rut')?.invalid && loginForm.get('dv_rut')?.touched" class="error-message">
+            <span *ngIf="loginForm.get('dv_rut')?.errors?.['required']">El dígito verificador es obligatorio</span>
+            <span *ngIf="loginForm.get('dv_rut')?.errors?.['pattern']">El dígito verificador debe ser un número o K</span>
+          </div>
+  
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</span>
+          </div>
+  
+          <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="loginForm.invalid || isLoading">
+            <ion-spinner name="circles" *ngIf="isLoading"></ion-spinner>
+            <span *ngIf="!isLoading">Iniciar Sesión</span>
+          </ion-button>
+  
+          <div class="ion-text-center ion-padding-top">
+            <ion-button fill="clear" size="small" (click)="irARecuperarPassword()">
+              ¿Olvidaste tu contraseña?
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  
+    <div class="ion-text-center ion-padding-top">
+      <p>¿No tienes una cuenta?</p>
+      <ion-button expand="block" fill="outline" (click)="irARegistro()">
+        Regístrate
+      </ion-button>
+    </div>
+  </ion-content>
