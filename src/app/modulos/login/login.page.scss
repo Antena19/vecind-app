@@ -1,75 +1,97 @@
 .logo-container {
-    padding: 20px 0;
-    margin-bottom: 20px;
-  
-    h1 {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: var(--ion-color-primary);
-    }
-  
-    h2 {
-      font-size: 20px;
-      margin-top: 0;
-      color: var(--ion-color-secondary);
-    }
-  
-    p {
-      color: var(--ion-color-medium);
-    }
+  padding: 20px 0;
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--ion-color-primary);
   }
-  
-  ion-card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+
+  h2 {
+    font-size: 20px;
+    margin-top: 0;
+    color: var(--ion-color-secondary);
   }
-  
-  .error-message {
-    color: var(--ion-color-danger);
-    font-size: 12px;
-    margin-left: 16px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+
+  p {
+    color: var(--ion-color-medium);
   }
-  
-  .rut-container {
+}
+
+ion-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color:  #F5F5DC;
+}
+
+ion-item {
+  --background: #ffffff;
+  --border-color: var(--ion-color-medium);
+  --border-color-focused: var(--ion-color-primary);
+  --color: #273746;
+  --padding-start: 10px;
+  --inner-padding-end: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ion-label {
+  color: #92949c;
+  font-weight: 500;
+  }
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  margin-left: 16px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.rut-container {
+  display: flex;
+  align-items: flex-end;
+
+  ion-item {
+    flex: 4;
+  }
+
+  .dv-item {
+    flex: 1;
+    min-width: 60px;
+  }
+
+  .rut-separator {
     display: flex;
-    align-items: flex-end;
-  
-    ion-item {
-      flex: 4;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 8px;
+    padding-bottom: 10px;
+    color: var(--ion-color-medium);
+  }
+}
+
+ion-button {
+  margin-top: 16px;
+  --border-radius:4px;
+}
+
+
+
+
+// Estilo para la versión móvil
+@media (max-width: 576px) {
+  .logo-container {
+    h1 {
+      font-size: 22px;
     }
-  
-    .dv-item {
-      flex: 1;
-      min-width: 60px;
-    }
-  
-    .rut-separator {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin: 0 8px;
-      padding-bottom: 10px;
+    
+    h2 {
+      font-size: 18px;
     }
   }
-  
-  ion-button {
-    margin-top: 16px;
-    --border-radius: 6px;
-  }
-  
-  // Estilo para la versión móvil
-  @media (max-width: 576px) {
-    .logo-container {
-      h1 {
-        font-size: 22px;
-      }
-      
-      h2 {
-        font-size: 18px;
-      }
-    }
-  }
+}

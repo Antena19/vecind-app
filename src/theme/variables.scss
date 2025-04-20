@@ -71,15 +71,15 @@
     --ion-color-light-shade: #d8d8c2;
     --ion-color-light-tint: #f6f6df;
 
-      // Colores de fondo globales
+      /** Colores de fondo globales**/
   --ion-background-color: #ffffff;
   --ion-background-color-rgb: 255, 255, 255;
   
-  // Colores de texto globales
+  /**Colores de texto globales**/
   --ion-text-color: #000000;
   --ion-text-color-rgb: 0, 0, 0;
   
-  // Colores para items/tarjetas
+  /** Colores para items/tarjetas**/
   --ion-item-background: #F5F5DC;
   --ion-card-background: #F5F5DC;
   }
@@ -91,7 +91,7 @@
      * #F5F5DC (beige), blanco y negro
      */
     :root {
-      // Invertimos algunos colores para el modo oscuro
+      /** Invertimos algunos colores para el modo oscuro**/
       --ion-color-primary: #00a996;
       --ion-color-primary-rgb: 0, 169, 150;
       --ion-color-primary-contrast: #ffffff;
@@ -148,14 +148,14 @@
       --ion-color-medium-shade: #86888f;
       --ion-color-medium-tint: #a2a4ab;
   
-      --ion-color-light: #e0e0c7;    // Ajustamos el beige para el modo oscuro
+      --ion-color-light: #e0e0c7;    
       --ion-color-light-rgb: 224, 224, 199;
       --ion-color-light-contrast: #000000;
       --ion-color-light-contrast-rgb: 0, 0, 0;
       --ion-color-light-shade: #c5c5af;
       --ion-color-light-tint: #e3e3cd;
   
-      // Configuración de fondo y texto para modo oscuro
+      /** Configuración de fondo y texto para modo oscuro**/
       --ion-background-color: #121212;
       --ion-background-color-rgb: 18, 18, 18;
   
@@ -164,15 +164,15 @@
   
       --ion-border-color: #222222;
   
-      // Colores para items y tarjetas
+      /** Colores para items y tarjetas **/
       --ion-item-background: #1e1e1e;
       --ion-card-background: #1e1e1e;
   
-      // Colores para pestañas
+      /** Colores para pestañas **/
       --ion-tab-bar-background: #1f1f1f;
       --ion-toolbar-background: #1f1f1f;
   
-      // Ajustes de íconos y botones
+      /** Ajustes de íconos y botones **/
       --ion-toolbar-color: #ffffff;
       --ion-tab-bar-color: #8c8c8c;
       --ion-tab-bar-color-selected: #00897B;

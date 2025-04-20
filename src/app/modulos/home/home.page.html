@@ -1,54 +1,89 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <ion-title>VecindApp</ion-title>
-      <ion-buttons slot="end">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding" [style.--background]="'var(--ion-color-light)'">
-    <!-- Sección de bienvenida al usuario -->
-    <div class="welcome-section" *ngIf="usuario">
-      <h2>Bienvenido, {{usuario.nombre}}</h2>
-    </div>
-  
-    <!-- Tarjetas de noticias y alertas -->
-    <ion-card class="announcement-card">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>VecindApp</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [style.--background]="'var(--ion-color-light)'">
+  <!-- Sección de bienvenida al usuario -->
+  <div class="welcome-section" *ngIf="usuario">
+    <h2>{{ getBienvenida() }}</h2>
+  </div>
+
+  <!-- Tarjetas de información -->
+  <ng-container [ngSwitch]="tipoUsuario">
+    <!-- Tarjetas para Vecino -->
+    <ng-container *ngSwitchCase="'vecino'">
+      <ion-card class="announcement-card">
+        <ion-card-content>
+          <h2>¿Quieres ser Socio?</h2>
+          <p>Conoce los beneficios de asociarte</p>
+          <ion-button expand="block" fill="clear" (click)="navigateTo('/solicitud-socio')">
+            Solicitar Membresía
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+    <!-- Tarjetas para Socio -->
+    <ng-container *ngSwitchCase="'socio'">
+      <ion-card class="cuotas-card">
+        <ion-card-content>
+          <h2>Estado de Cuotas</h2>
+          <p>Revisa tu situación actual</p>
+          <ion-button expand="block" fill="clear" (click)="navigateTo('/estado-cuotas')">
+            Ver Detalles
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+    <!-- Tarjetas para Directiva -->
+    <ng-container *ngSwitchCase="'directiva'">
+      <ion-card class="admin-card">
+        <ion-card-content>
+          <h2>Gestión Administrativa</h2>
+          <p>Tienes solicitudes pendientes</p>
+          <ion-button expand="block" fill="clear" (click)="navigateTo('/gestion-socios')">
+            Revisar Solicitudes
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+    <!-- Tarjeta común de anuncios/alertas -->
+    <ion-card class="general-info-card">
       <ion-card-content>
         <h2>Próxima reunión vecinal</h2>
         <p>Jueves, 18:00 - Centro comunitario</p>
       </ion-card-content>
     </ion-card>
-  
-    <ion-card class="alert-card">
-      <ion-card-content>
-        <h2>Alerta: Corte de agua programado</h2>
-        <p>Mañana, 10:00 - 14:00</p>
-      </ion-card-content>
-    </ion-card>
-  
-    <!-- Grid de opciones de menú -->
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6" *ngFor="let option of getMenuOptions()">
-          <ion-card class="menu-option-card" (click)="navigateTo(option.route)">
-            <ion-card-content class="ion-text-center">
-              <ion-icon [name]="option.icon" color="primary" class="menu-icon"></ion-icon>
-              <p>{{option.title}}</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  
-    <!-- Botón de emergencia -->
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="danger" (click)="activarAlertaEmergencia()">
-        <ion-icon name="alert-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </ion-content>
+  </ng-container>
+
+  <!-- Grid de opciones de menú -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let option of menuOptions">
+        <ion-card class="menu-option-card" (click)="navigateTo(option.route)">
+          <ion-card-content class="ion-text-center">
+            <ion-icon [name]="option.icon" color="primary" class="menu-icon"></ion-icon>
+            <p>{{option.title}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botón de emergencia (solo para Socio y Directiva) -->
+  <ion-fab *ngIf="tipoUsuario !== 'vecino'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" (click)="activarAlertaEmergencia()">
+      <ion-icon name="alert-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

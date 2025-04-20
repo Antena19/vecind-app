@@ -3,6 +3,13 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AutenticacionService } from '../../services/autenticacion.service';
+import { Usuario } from '../../Modelos/Usuario';
+
+interface MenuOption {
+  title: string;
+  icon: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -12,66 +19,90 @@ import { AutenticacionService } from '../../services/autenticacion.service';
   imports: [IonicModule, CommonModule]
 })
 export class HomePage implements OnInit {
-  usuario: any = null;
-  tipoUsuario: string = '';
+  usuario: Usuario | null = null;
+  tipoUsuario: string = 'vecino';
 
-  // Opciones del menú principal
-  menuOptions = [
+  // Menús específicos por rol
+  private menuVecino: MenuOption[] = [
     { 
-      title: 'EVENTOS', 
-      icon: 'calendar-outline', 
-      route: '/eventos',
-      access: ['vecino', 'socio', 'directiva'] 
+      title: 'Mi Perfil', 
+      icon: 'person-outline', 
+      route: '/mi-perfil'
     },
     { 
-      title: 'ANUNCIOS', 
-      icon: 'notifications-outline', 
-      route: '/anuncios',
-      access: ['vecino', 'socio', 'directiva'] 
+      title: 'Noticias', 
+      icon: 'newspaper-outline', 
+      route: '/noticias'
     },
     { 
-      title: 'CHAT VECINAL', 
-      icon: 'chatbubbles-outline', 
-      route: '/chat',
-      access: ['vecino', 'socio', 'directiva'] 
-    },
-    { 
-      title: 'RECURSOS', 
-      icon: 'information-circle-outline', 
-      route: '/recursos',
-      access: ['vecino', 'socio', 'directiva'] 
-    },
-    { 
-      title: 'ENCUESTAS', 
+      title: 'Certificados', 
       icon: 'document-text-outline', 
-      route: '/encuestas',
-      access: ['vecino', 'socio', 'directiva'] 
+      route: '/certificados'
     },
     { 
-      title: 'PROYECTOS', 
+      title: 'Hacerme Socio', 
       icon: 'people-outline', 
-      route: '/proyectos',
-      access: ['vecino', 'socio', 'directiva'] 
-    },
-    { 
-      title: 'CUOTAS', 
-      icon: 'cash-outline', 
-      route: '/cuotas',
-      access: ['socio', 'directiva'] 
-    },
-    { 
-      title: 'CERTIFICADOS', 
-      icon: 'document-outline', 
-      route: '/certificados',
-      access: ['vecino', 'socio', 'directiva'] 
-    },
-    { 
-      title: 'ADMINISTRACIÓN', 
-      icon: 'settings-outline', 
-      route: '/admin',
-      access: ['directiva'] 
+      route: '/solicitud-socio'
     }
   ];
+
+  private menuSocio: MenuOption[] = [
+    { 
+      title: 'Mi Perfil', 
+      icon: 'person-outline', 
+      route: '/mi-perfil'
+    },
+    { 
+      title: 'Noticias', 
+      icon: 'newspaper-outline', 
+      route: '/noticias'
+    },
+    { 
+      title: 'Certificados', 
+      icon: 'document-text-outline', 
+      route: '/certificados'
+    },
+    { 
+      title: 'Estado de Cuotas', 
+      icon: 'cash-outline', 
+      route: '/estado-cuotas'
+    }
+  ];
+
+  private menuDirectiva: MenuOption[] = [
+    { 
+      title: 'Mi Perfil', 
+      icon: 'person-outline', 
+      route: '/mi-perfil'
+    },
+    { 
+      title: 'Noticias', 
+      icon: 'newspaper-outline', 
+      route: '/noticias'
+    },
+    { 
+      title: 'Publicar Noticias', 
+      icon: 'create-outline', 
+      route: '/publicar-noticias'
+    },
+    { 
+      title: 'Certificados', 
+      icon: 'document-text-outline', 
+      route: '/certificados'
+    },
+    { 
+      title: 'Gestión de Socios', 
+      icon: 'people-circle-outline', 
+      route: '/gestion-socios'
+    },
+    { 
+      title: 'Gestión Financiera', 
+      icon: 'stats-chart-outline', 
+      route: '/gestion-financiera'
+    }
+  ];
+
+  menuOptions: MenuOption[] = [];
 
   constructor(
     private router: Router,
@@ -81,14 +112,31 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.autenticacionService.usuario.subscribe(user => {
       this.usuario = user;
-      this.tipoUsuario = user?.tipo_usuario || 'vecino'; // Por defecto es vecino
+      this.tipoUsuario = user?.tipo_usuario?.toLowerCase() || 'vecino';
+      
+      // Asignar menú según el rol
+      switch(this.tipoUsuario) {
+        case 'socio':
+          this.menuOptions = this.menuSocio;
+          break;
+        case 'directiva':
+          this.menuOptions = this.menuDirectiva;
+          break;
+        default: // 'vecino'
+          this.menuOptions = this.menuVecino;
+      }
     });
   }
 
-  getMenuOptions() {
-    return this.menuOptions.filter(option => 
-      option.access.includes(this.tipoUsuario)
-    );
+  getBienvenida(): string {
+    switch(this.tipoUsuario) {
+      case 'directiva':
+        return `Bienvenido, Admin ${this.usuario?.nombre}`;
+      case 'socio':
+        return `Bienvenido, Socio ${this.usuario?.nombre}`;
+      default:
+        return `Bienvenido, ${this.usuario?.nombre}`;
+    }
   }
 
   navigateTo(route: string) {
@@ -96,7 +144,15 @@ export class HomePage implements OnInit {
   }
 
   activarAlertaEmergencia() {
-    // Aquí irá la lógica para activar la alerta de emergencia
-    console.log('Alerta de emergencia activada');
+    // Verificar si el usuario tiene permiso
+    if (this.tipoUsuario !== 'vecino') {
+      const confirmacion = confirm('¿Estás seguro de activar la alerta de emergencia?');
+      if (confirmacion) {
+        // TODO: Implementar lógica de alerta de emergencia
+        console.log('Alerta de emergencia activada');
+      }
+    } else {
+      alert('Solo socios y directiva pueden activar alertas de emergencia');
+    }
   }
 }
