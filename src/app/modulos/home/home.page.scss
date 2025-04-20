@@ -1,90 +1,127 @@
 // Colores personalizados basados en tu tema
 :host {
-    --menu-bg-color: #00897B;
-    --card-bg-color: #F5F5DC;
+  --menu-bg-color: #00897B;
+  --card-bg-color: #F5F5DC;
+  --text-dark-color: #333333;
+}
+
+.welcome-section {
+  margin-bottom: 20px;
+  
+  h2 {
+    margin: 0;
+    font-size: 24px; // Aumentado para mejor legibilidad
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+}
+
+// Estilos para las tarjetas de anuncios
+.announcement-card, .general-info-card {
+  margin-bottom: 16px;
+  border-radius: 10px;
+  background-color: var(--card-bg-color);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  
+  h2 {
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--text-dark-color);
   }
   
-  .welcome-section {
-    margin-bottom: 16px;
-    
-    h2 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--ion-color-primary);
-    }
+  p {
+    margin-bottom: 10px;
+    color: var(--text-dark-color);
+  }
+
+  ion-button {
+    --color: var(--ion-color-primary);
+    font-weight: bold;
+  }
+}
+
+// Estilos para los botones del menú
+.menu-option-card {
+  background-color: var(--menu-bg-color);
+  color: white;
+  height: 120px; // Aumentado para más espacio
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 8px 0;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.95);
   }
   
-  // Estilos para las tarjetas de anuncios
-  .announcement-card, .alert-card {
-    margin-bottom: 16px;
-    border-radius: 8px;
-    background-color: var(--card-bg-color);
-    
-    h2 {
-      margin-top: 0;
-      font-weight: bold;
-      font-size: 16px;
-    }
-    
-    p {
-      margin-bottom: 0;
-    }
-  }
-  
-  .alert-card h2 {
-    color: var(--ion-color-warning-shade);
-  }
-  
-  // Estilos para los botones del menú
-  .menu-option-card {
-    background-color: var(--menu-bg-color);
-    color: white;
-    height: 100px;
+  ion-card-content {
+    padding: 15px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    height: 100%;
+  }
+  
+  .menu-icon {
+    font-size: 44px; // Iconos más grandes
+    margin-bottom: 10px;
+    color: white !important;
+  }
+  
+  p {
     margin: 0;
-    
-    ion-card-content {
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
+    font-size: 16px; // Texto más grande
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+// Estilos para tarjetas específicas de roles
+.cuotas-card, .admin-card {
+  margin-bottom: 16px;
+  border-radius: 10px;
+  background-color: #E0E0E0; // Color claro para la tarjeta negra
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  
+  h2 {
+    color: var(--text-dark-color);
+    font-size: 18px;
+  }
+  
+  p {
+    color: var(--text-dark-color);
+  }
+
+  ion-button {
+    --color: var(--ion-color-primary);
+    font-weight: bold;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  ion-col {
+    padding: 5px;
+  }
+  
+  .menu-option-card {
+    height: 100px;
     
     .menu-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-      color: white;
+      font-size: 36px;
     }
     
     p {
-      margin: 0;
-      font-size: 12px;
-      text-align: center;
-      color: white;
+      font-size: 14px;
     }
   }
-  
-  // Responsive adjustments
-  @media (max-width: 576px) {
-    ion-col {
-      padding: 5px;
-    }
-    
-    .menu-option-card {
-      height: 90px;
-      
-      .menu-icon {
-        font-size: 28px;
-      }
-      
-      p {
-        font-size: 10px;
-      }
-    }
+
+  .welcome-section h2 {
+    font-size: 20px;
   }
+}

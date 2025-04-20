@@ -1,5 +1,6 @@
-.splash-container {
-    --background: #2C3E50;
+ion-content.splash-container {
+    --background: none !important;
+    background-color: #2C3E50 !important;
     display: flex;
     flex-direction: column;
     justify-content: center;

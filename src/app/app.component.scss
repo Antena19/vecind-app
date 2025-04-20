@@ -121,3 +121,12 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+ion-split-pane {
+  height: 100vh;
+}
+
+#main-content {
+  height: 100%;
+  width: 100%;
+}
