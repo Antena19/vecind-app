@@ -1,0 +1,37 @@
+.error-container {
+    padding-left: 16px;
+    padding-top: 5px;
+    font-size: 12px;
+  }
+  
+  ion-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  ion-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .ion-padding-top {
+    padding-top: 20px;
+  }
+  
+  ion-button {
+    margin: 10px 0;
+    --border-radius: 8px;
+  }
+  
+  .spinner-center {
+    display: block;
+    margin: 50px auto;
+  }
+  
+  ion-badge {
+    padding: 8px 10px;
+    font-size: 14px;
+  }

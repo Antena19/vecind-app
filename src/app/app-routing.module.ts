@@ -26,12 +26,15 @@ const routes: Routes = [
     path: 'registro',
     loadComponent: () => import('./modulos/registro/registro-vecino/registro-vecino.component').then(m => m.RegistroVecinoComponent)
   },
-  /*
   {
     path: 'recuperar-password',
-    loadChildren: () => import('./modulos/recuperar-password/recuperar-password.module').then(m => m.RecuperarPasswordPageModule)
+    loadComponent: () => import('./modulos/recuperacion-password/recuperar-password/recuperar-password.component').then(m => m.RecuperarPasswordComponent)
   },
-  */
+  {
+    path: 'mi-perfil',
+    loadComponent: () => import('./modulos/perfil/mi-perfil/mi-perfil.component').then(m => m.MiPerfilComponent),
+    canActivate: [AuthGuard] 
+  },
 
 ];
 

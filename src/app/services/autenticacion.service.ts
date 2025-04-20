@@ -13,6 +13,7 @@ export class AutenticacionService {
   private _token = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {
+    console.log('Inicializando AutenticacionService');
     this.cargarDatosGuardados();
   }
 
@@ -31,47 +32,59 @@ export class AutenticacionService {
   get isAuthenticated(): boolean {
     return !!this._token.value;
   }
+  
 
   private cargarDatosGuardados() {
-    const userData = localStorage.getItem('usuario');
-    const token = localStorage.getItem('token');
-  
-    if (userData && token) {
-      try {
-        this._usuario.next(JSON.parse(userData));
+    try {
+      const token = localStorage.getItem('token');
+      
+      if (token) {
         this._token.next(token);
-      } catch(e) {
-        console.error('Error al procesar datos guardados:', e);
-        // Limpiar datos incorrectos
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('token');
+        
+        // Intentar cargar usuario
+        const userData = localStorage.getItem('usuario');
+        if (userData && userData !== "undefined") {
+          try {
+            const usuario = JSON.parse(userData);
+            this._usuario.next(usuario);
+          } catch (e) {
+            console.error('Error al procesar datos de usuario:', e);
+            // Limpiar solo datos de usuario inválidos
+            localStorage.removeItem('usuario');
+          }
+        }
       }
+    } catch(e) {
+      console.error('Error al cargar datos guardados:', e);
+      // Limpiar todo en caso de error crítico
+      localStorage.removeItem('token');
+      localStorage.removeItem('usuario');
     }
   }
 
   iniciarSesion(rut: number, dv_rut: string, password: string): Observable<any> {
     const url = `${Constantes.API_URL}/api/Autenticacion/login`;
     const body = {
-      username: rut.toString(), // El controlador espera un Username de tipo string
-      password: password        // El password coincide
-  };
-    console.log("FLAG3");
-    console.log('Enviando solicitud de login:', body);
+      username: rut.toString(),
+      password: password
+    };
     
     return this.http.post<any>(url, body).pipe(
       tap(response => {
         if (response && response.token) {
-          const usuario = response.usuario || response.user;
+          // Guardar token
           this._token.next(response.token);
-          this._usuario.next(usuario);
-
           localStorage.setItem('token', response.token);
-          localStorage.setItem('usuario', JSON.stringify(usuario));
+          
+          // Guardar usuario si existe
+          if (response.usuario) {
+            this._usuario.next(response.usuario);
+            localStorage.setItem('usuario', JSON.stringify(response.usuario));
+          }
         }
       })
     );
   }
-
   cerrarSesion() {
     // Eliminar datos de localStorage
     localStorage.removeItem('token');
