@@ -22,7 +22,6 @@ export class RecuperarPasswordComponent implements OnInit {
   recuperacionForm!: FormGroup;
   isSubmitted = false;
   cargando = false;
-  paso = 1; // 1: solicitud inicial, 2: ingreso de código y nueva contraseña
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,41 +32,14 @@ export class RecuperarPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inicializarFormularioSolicitud();
+    this.inicializarFormulario();
   }
 
-  inicializarFormularioSolicitud() {
+  inicializarFormulario() {
     this.recuperacionForm = this.formBuilder.group({
-      metodo: ['correo', Validators.required], // 'correo' o 'rut'
-      correo_electronico: ['', [Validators.email]],
-      rut: ['', [Validators.pattern(/^\d+$/)]],
-      dv_rut: ['', [Validators.pattern(/^[0-9kK]$/)]]
-    }, {
-      validators: this.validarMetodoRecuperacion
-    });
-
-    // Actualizar validaciones cuando cambia el método
-    this.recuperacionForm.get('metodo')?.valueChanges.subscribe(metodo => {
-      if (metodo === 'correo') {
-        this.recuperacionForm.get('correo_electronico')?.setValidators([Validators.required, Validators.email]);
-        this.recuperacionForm.get('rut')?.clearValidators();
-        this.recuperacionForm.get('dv_rut')?.clearValidators();
-      } else {
-        this.recuperacionForm.get('correo_electronico')?.clearValidators();
-        this.recuperacionForm.get('rut')?.setValidators([Validators.required, Validators.pattern(/^\d+$/)]);
-        this.recuperacionForm.get('dv_rut')?.setValidators([Validators.required, Validators.pattern(/^[0-9kK]$/)]);
-      }
-      
-      this.recuperacionForm.get('correo_electronico')?.updateValueAndValidity();
-      this.recuperacionForm.get('rut')?.updateValueAndValidity();
-      this.recuperacionForm.get('dv_rut')?.updateValueAndValidity();
-    });
-  }
-
-  inicializarFormularioNuevaPassword(rut: number) {
-    this.recuperacionForm = this.formBuilder.group({
-      rut: [rut, Validators.required],
-      token: ['', [Validators.required, Validators.minLength(6)]],
+      rut: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      dv_rut: ['', [Validators.required, Validators.pattern(/^[0-9kK]$/)]],
+      nombreCompleto: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [
         Validators.required, 
         Validators.minLength(8),
@@ -77,26 +49,6 @@ export class RecuperarPasswordComponent implements OnInit {
     }, {
       validators: this.passwordMatchValidator
     });
-  }
-
-  // Validador para asegurar que se proporciona la información adecuada según el método
-  validarMetodoRecuperacion(form: FormGroup) {
-    const metodo = form.get('metodo')?.value;
-    
-    if (metodo === 'correo') {
-      const correo = form.get('correo_electronico')?.value;
-      if (!correo) {
-        return { correoRequerido: true };
-      }
-    } else if (metodo === 'rut') {
-      const rut = form.get('rut')?.value;
-      const dv = form.get('dv_rut')?.value;
-      if (!rut || !dv) {
-        return { rutRequerido: true };
-      }
-    }
-    
-    return null;
   }
 
   // Validador para confirmar que las contraseñas coincidan
@@ -143,7 +95,7 @@ export class RecuperarPasswordComponent implements OnInit {
     }
   }
 
-  async solicitarRecuperacion() {
+  async recuperarContrasena() {
     this.isSubmitted = true;
     
     if (this.recuperacionForm.invalid) {
@@ -158,82 +110,15 @@ export class RecuperarPasswordComponent implements OnInit {
     });
     await loading.present();
     
-  // Ajuste importante: el backend espera un objeto con la propiedad "CorreoElectronico"
-  const datos = {
-    CorreoElectronico: this.recuperacionForm.get('correo_electronico')?.value
-  };
+    // Preparar los datos para el endpoint
+    const datos = {
+      Rut: parseInt(this.recuperacionForm.get('rut')?.value),
+      NombreCompleto: this.recuperacionForm.get('nombreCompleto')?.value,
+      NuevaContrasena: this.recuperacionForm.get('password')?.value,
+      ConfirmarContrasena: this.recuperacionForm.get('confirmPassword')?.value
+    };
     
-  this.http.post(`${environment.apiUrl}/api/Autenticacion/recuperar-clave`, datos)
-    .subscribe({
-      next: async (response: any) => {
-        this.cargando = false;
-        await loading.dismiss();
-          
-        const alert = await this.alertController.create({
-          header: 'Solicitud enviada',
-          message: 'Se ha enviado un código de recuperación a tu correo electrónico registrado. Utilizalo para restablecer tu contraseña.',
-          buttons: [
-            {
-              text: 'Aceptar',
-              handler: () => {
-                this.paso = 2;
-                // Obtener el RUT desde el formulario o respuesta si está disponible
-                const rutFromBackend = response.rut || 0;
-                this.inicializarFormularioNuevaPassword(0); // Inicializar con un RUT temporal
-              }
-            }
-          ]
-        });
-          
-          await alert.present();
-        },
-        error: async (error) => {
-          this.cargando = false;
-          await loading.dismiss();
-          
-          let mensajeError = 'Ocurrió un error al procesar la solicitud. Por favor, intenta nuevamente.';
-          
-          if (error.status === 404) {
-            mensajeError = 'No se encontró ninguna cuenta con la información proporcionada.';
-          } else if (error.status === 400) {
-            mensajeError = error.error?.mensaje || 'Datos inválidos. Verifica la información proporcionada.';
-          }
-          
-          const alert = await this.alertController.create({
-            header: 'Error',
-            message: mensajeError,
-            buttons: ['Aceptar']
-          });
-          
-          await alert.present();
-        }
-      });
-  }
-
-  async confirmarRecuperacion() {
-    this.isSubmitted = true;
-    
-    if (this.recuperacionForm.invalid) {
-      return;
-    }
-    
-    this.cargando = true;
-    
-    const loading = await this.loadingController.create({
-      message: 'Actualizando contraseña...',
-      spinner: 'crescent'
-    });
-    await loading.present();
-    
-  // Ajuste importante: el backend espera un objeto con propiedades específicas
-  const datos = {
-    Rut: this.recuperacionForm.get('rut')?.value,
-    Token: this.recuperacionForm.get('token')?.value,
-    NuevaContrasena: this.recuperacionForm.get('password')?.value,
-    ConfirmarContrasena: this.recuperacionForm.get('confirmPassword')?.value
-  };
-    
-    this.http.post(`${environment.apiUrl}/api/Autenticacion/confirmar-recuperacion`, datos)
+    this.http.post(`${environment.apiUrl}/api/Autenticacion/recuperar-clave-simple`, datos)
       .subscribe({
         next: async () => {
           this.cargando = false;
@@ -260,10 +145,10 @@ export class RecuperarPasswordComponent implements OnInit {
           
           let mensajeError = 'Ocurrió un error al actualizar la contraseña. Por favor, intenta nuevamente.';
           
-          if (error.status === 400) {
-            if (error.error?.mensaje?.includes('token')) {
-              mensajeError = 'El código de recuperación es inválido o ha expirado.';
-            } else if (error.error?.mensaje?.includes('contraseña')) {
+          if (error.status === 401) {
+            mensajeError = 'Los datos proporcionados no son correctos. Verifica tu RUT y nombre completo.';
+          } else if (error.status === 400) {
+            if (error.error?.mensaje?.includes('contraseña')) {
               mensajeError = 'La nueva contraseña no cumple con los requisitos de seguridad.';
             } else {
               mensajeError = error.error?.mensaje || 'Datos inválidos. Verifica la información proporcionada.';
@@ -282,20 +167,10 @@ export class RecuperarPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.paso === 1) {
-      this.solicitarRecuperacion();
-    } else {
-      this.confirmarRecuperacion();
-    }
+    this.recuperarContrasena();
   }
 
   volver() {
-    if (this.paso === 2) {
-      this.paso = 1;
-      this.inicializarFormularioSolicitud();
-      this.isSubmitted = false;
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/login']);
   }
 }
