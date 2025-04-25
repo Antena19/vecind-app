@@ -26,16 +26,18 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 /**
- * Ionic Dark Mode
+ * Ionic Dark Mode - DESACTIVADO
  * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
+ * Se ha eliminado la detección de modo oscuro del sistema
+ * para mantener una sola estética visual
  */
 
+/* Eliminar estas importaciones para evitar cambios automáticos según el sistema */
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
 
+/* Estilos para la barra de herramientas */
 ion-header ion-toolbar,
 ion-toolbar {
   --background: #2C3E50 !important;
@@ -47,4 +49,83 @@ ion-toolbar ion-title,
 ion-back-button,
 ion-buttons ion-button {
   color: white !important;
+}
+
+/* Estilos personalizados globales */
+ion-content {
+  --background: #ffffff;
+}
+
+ion-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+ion-item {
+  --background: #F5F5DC;
+  margin-bottom: 2px;
+}
+
+/* Estilos para botones principales */
+ion-button.primary-button {
+  --background: #00897B;
+  --background-activated: #00796c;
+  --color: white;
+  font-weight: 500;
+}
+
+/* Estilos para botones secundarios */
+ion-button.secondary-button {
+  --background: #2C3E50;
+  --background-activated: #273746;
+  --color: white;
+  font-weight: 500;
+}
+
+/* Estilos para botones de acción */
+ion-fab-button {
+  --background: #00897B;
+  --background-activated: #00796c;
+}
+
+/* Estilos para pestañas */
+ion-tab-bar {
+  --background: #f7f7f2;
+}
+
+ion-tab-button {
+  --color: #8c8c8c;
+  --color-selected: #00897B;
+}
+
+/* Estilos para formularios */
+ion-input, ion-textarea, ion-select {
+  --background: #ffffff;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  border: 1px solid #e2e2d0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para segmentos */
+ion-segment {
+  --background: #F5F5DC;
+}
+
+ion-segment-button {
+  --color: #2C3E50;
+  --color-checked: #00897B;
+  --indicator-color: #00897B;
+}
+
+/* Estilos para listas */
+ion-list {
+  background: transparent;
+}
+
+/* Estilos para modales */
+ion-modal {
+  --background: #ffffff;
+  --height: auto;
 }
