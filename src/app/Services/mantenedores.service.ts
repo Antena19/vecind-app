@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Constantes } from "../constantes";
-import { Usuario } from "../Modelos/Usuario";
+import { Usuario } from "../modelos/Usuario";
 
 // Token de prueba (definido fuera de la clase)
 const tokenTest = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";

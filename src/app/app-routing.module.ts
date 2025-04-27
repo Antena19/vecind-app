@@ -35,7 +35,10 @@ const routes: Routes = [
     loadComponent: () => import('./modulos/perfil/mi-perfil/mi-perfil.component').then(m => m.MiPerfilComponent),
     canActivate: [AuthGuard] 
   },
-
+  {
+    path: 'mantenedores/gestion-socios',
+    loadChildren: () => import('./modulos/mantenedores/gestion-socios/gestion-socios/gestion-socios.module').then(m => m.GestionSociosModule)
+  },
 ];
 
 @NgModule({

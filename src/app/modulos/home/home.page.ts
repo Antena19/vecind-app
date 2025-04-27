@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AutenticacionService } from '../../services/autenticacion.service';
-import { Usuario } from '../../Modelos/Usuario';
+import { Usuario } from '../../modelos/Usuario';
 
 interface MenuOption {
   title: string;
@@ -93,14 +93,19 @@ export class HomePage implements OnInit {
     { 
       title: 'Gestión de Socios', 
       icon: 'people-circle-outline', 
-      route: '/gestion-socios'
+      route: '/mantenedores/gestion-socios'  // Actualiza la ruta
+    },
+    { 
+      title: 'Solicitudes', 
+      icon: 'clipboard-outline', 
+      route: '/mantenedores/gestion-socios/solicitudes'  // Nueva ruta para solicitudes
     },
     { 
       title: 'Gestión Financiera', 
       icon: 'stats-chart-outline', 
       route: '/gestion-financiera'
     }
-  ];
+  ]
 
   menuOptions: MenuOption[] = [];
 

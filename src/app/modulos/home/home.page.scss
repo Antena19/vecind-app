@@ -16,6 +16,11 @@
   }
 }
 
+// Para los iconos en los botones
+ion-button ion-icon {
+  margin-right: 8px;
+}
+
 // Estilos para las tarjetas de anuncios
 .announcement-card, .general-info-card {
   margin-bottom: 16px;
@@ -85,7 +90,7 @@
 .cuotas-card, .admin-card {
   margin-bottom: 16px;
   border-radius: 10px;
-  background-color: #E0E0E0; // Color claro para la tarjeta negra
+  background-color: #E0E0E0; 
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   
   h2 {

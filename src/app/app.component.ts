@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AutenticacionService } from './services/autenticacion.service';
-import { Usuario } from './Modelos/Usuario';
+import { Usuario } from './modelos/Usuario';
 
 // Definir una interfaz para las opciones del menú
 interface MenuOption {
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     { title: 'Noticias', url: '/noticias', icon: 'newspaper' },
     { title: 'Publicar Noticias', url: '/publicar-noticias', icon: 'create' },
     { title: 'Certificados', url: '/certificados', icon: 'document-text' },
-    { title: 'Gestión de Socios', url: '/gestion-socios', icon: 'people-circle' },
+    { title: 'Gestión de Socios', url: '/mantenedores/gestion-socios', icon: 'people-circle' },
     { title: 'Gestión Financiera', url: '/gestion-financiera', icon: 'stats-chart' },
   ];
 
