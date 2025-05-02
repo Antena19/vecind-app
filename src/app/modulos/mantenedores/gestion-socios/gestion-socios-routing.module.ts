@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Importar los componentes
+import { GestionSociosComponent } from './gestion-socios/gestion-socios.component';
 import { ListaSociosComponent } from './lista-socios/lista-socios.component';
 import { AgregarSocioComponent } from './agregar-socio/agregar-socio.component';
 import { EditarSocioComponent } from './editar-socio/editar-socio.component';
@@ -13,27 +14,31 @@ import { GestionSolicitudesComponent } from './gestion-solicitudes/gestion-solic
 const routes: Routes = [
   {
     path: '',
-    component: ListaSociosComponent
+    loadComponent: () => import('./gestion-socios/gestion-socios.component').then(m => m.GestionSociosComponent)
   },
   {
-    path: 'agregar',
-    component: AgregarSocioComponent
+    path: 'lista-socios',
+    loadComponent: () => import('./lista-socios/lista-socios.component').then(m => m.ListaSociosComponent)
+  },
+  {
+    path: 'agregar-socio',
+    loadComponent: () => import('./agregar-socio/agregar-socio.component').then(m => m.AgregarSocioComponent)
   },
   {
     path: 'editar/:id',
-    component: EditarSocioComponent
+    loadComponent: () => import('./editar-socio/editar-socio.component').then(m => m.EditarSocioComponent)
   },
   {
     path: 'detalle/:id',
-    component: DetalleSocioComponent
+    loadComponent: () => import('./detalle-socio/detalle-socio.component').then(m => m.DetalleSocioComponent)
   },
   {
     path: 'solicitudes',
-    component: SolicitudesMembresiaComponent
+    loadComponent: () => import('./solicitudes-membresia/solicitudes-membresia.component').then(m => m.SolicitudesMembresiaComponent)
   },
   {
     path: 'gestion-solicitudes',
-    component: GestionSolicitudesComponent
+    loadComponent: () => import('./gestion-solicitudes/gestion-solicitudes.component').then(m => m.GestionSolicitudesComponent)
   }
 ];
 

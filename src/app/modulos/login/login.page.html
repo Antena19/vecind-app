@@ -34,7 +34,13 @@
           <div class="input-container">
             <ion-label>Contraseña</ion-label>
             <ion-item>
-              <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
+              <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
+              <ion-icon 
+                slot="end"
+                [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" 
+                (click)="togglePassword()" 
+                class="password-toggle-icon">
+              </ion-icon>
             </ion-item>
           </div>
           <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
@@ -47,6 +53,7 @@
           type="submit" 
           class="ion-margin-top login-button" 
           [disabled]="loginForm.invalid || isLoading"
+          color="primary"
         >
           <ion-spinner name="circles" *ngIf="isLoading"></ion-spinner>
           <span *ngIf="!isLoading">Iniciar Sesión</span>

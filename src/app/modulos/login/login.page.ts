@@ -15,6 +15,7 @@ import { AutenticacionService } from '../../services/autenticacion.service';
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   isLoading = false;
+  showPassword = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,10 +31,14 @@ export class LoginPage implements OnInit {
 
   initForm() {
     this.loginForm = this.formBuilder.group({
-      rut: ['', [Validators.required]],
+      rut: ['', [Validators.required, Validators.pattern(/^[0-9]{7,8}$/)]],
       dv_rut: ['', [Validators.required, Validators.pattern(/^[0-9kK]$/)]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   async login() {

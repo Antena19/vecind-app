@@ -43,9 +43,9 @@ export class AppComponent implements OnInit {
     { title: 'Home', url: '/home', icon: 'home' },
     { title: 'Mi Perfil', url: '/mi-perfil', icon: 'person' },
     { title: 'Noticias', url: '/noticias', icon: 'newspaper' },
-    { title: 'Publicar Noticias', url: '/publicar-noticias', icon: 'create' },
     { title: 'Certificados', url: '/certificados', icon: 'document-text' },
     { title: 'Gestión de Socios', url: '/mantenedores/gestion-socios', icon: 'people-circle' },
+    { title: 'Gestión de Vecinos', url: '/mantenedores/gestion-usuarios', icon: 'people' },
     { title: 'Gestión Financiera', url: '/gestion-financiera', icon: 'stats-chart' },
   ];
 

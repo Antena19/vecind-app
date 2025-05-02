@@ -1,11 +1,15 @@
 ion-content.splash-container {
     --background: none !important;
     background-color: #2C3E50 !important;
+    height: 100%;
+  }
+  
+  .main-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100%;
+    justify-content: center;
+    min-height: 100vh;
   }
   
   .logo-container {
@@ -15,6 +19,51 @@ ion-content.splash-container {
     justify-content: center;
     padding: 2rem;
     margin-bottom: 2rem;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+
+  .animate-logo {
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .animate-text {
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+    &:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+  }
+
+  .animate-button {
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+    animation-delay: 0.9s;
   }
   
   .app-logo {

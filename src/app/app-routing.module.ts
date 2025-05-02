@@ -37,8 +37,12 @@ const routes: Routes = [
   },
   {
     path: 'mantenedores/gestion-socios',
-    loadChildren: () => import('./modulos/mantenedores/gestion-socios/gestion-socios/gestion-socios.module').then(m => m.GestionSociosModule)
+    loadChildren: () => import('./modulos/mantenedores/gestion-socios/gestion-socios-routing.module').then(m => m.GestionSociosRoutingModule)
   },
+  {
+    path: 'mantenedores/gestion-usuarios',
+    loadChildren: () => import('./modulos/mantenedores/gestion-usuarios/gestion-usuarios-routing.module').then(m => m.GestionUsuariosRoutingModule)
+  }
 ];
 
 @NgModule({

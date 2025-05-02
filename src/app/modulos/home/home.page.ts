@@ -81,11 +81,6 @@ export class HomePage implements OnInit {
       route: '/noticias'
     },
     { 
-      title: 'Publicar Noticias', 
-      icon: 'create-outline', 
-      route: '/publicar-noticias'
-    },
-    { 
       title: 'Certificados', 
       icon: 'document-text-outline', 
       route: '/certificados'
@@ -93,12 +88,17 @@ export class HomePage implements OnInit {
     { 
       title: 'Gestión de Socios', 
       icon: 'people-circle-outline', 
-      route: '/mantenedores/gestion-socios'  // Actualiza la ruta
+      route: '/mantenedores/gestion-socios'
+    },
+    { 
+      title: 'Gestión de Vecinos', 
+      icon: 'people-outline', 
+      route: '/mantenedores/gestion-usuarios'
     },
     { 
       title: 'Solicitudes', 
       icon: 'clipboard-outline', 
-      route: '/mantenedores/gestion-socios/solicitudes'  // Nueva ruta para solicitudes
+      route: '/mantenedores/gestion-socios/solicitudes'
     },
     { 
       title: 'Gestión Financiera', 
@@ -134,30 +134,10 @@ export class HomePage implements OnInit {
   }
 
   getBienvenida(): string {
-    switch(this.tipoUsuario) {
-      case 'directiva':
-        return `Bienvenido, Admin ${this.usuario?.nombre}`;
-      case 'socio':
-        return `Bienvenido, Socio ${this.usuario?.nombre}`;
-      default:
-        return `Bienvenido, ${this.usuario?.nombre}`;
-    }
+    return `Bienvenido, ${this.usuario?.nombre} ${this.usuario?.apellido_paterno}`;
   }
 
   navigateTo(route: string) {
     this.router.navigate([route]);
-  }
-
-  activarAlertaEmergencia() {
-    // Verificar si el usuario tiene permiso
-    if (this.tipoUsuario !== 'vecino') {
-      const confirmacion = confirm('¿Estás seguro de activar la alerta de emergencia?');
-      if (confirmacion) {
-        // TODO: Implementar lógica de alerta de emergencia
-        console.log('Alerta de emergencia activada');
-      }
-    } else {
-      alert('Solo socios y directiva pueden activar alertas de emergencia');
-    }
   }
 }

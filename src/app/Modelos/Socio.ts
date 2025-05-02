@@ -30,4 +30,4 @@ export class Socio {
       this.documento_domicilio = documento_domicilio || new Uint8Array();
       this.estado = estado || false;
     }
-  }
+}
