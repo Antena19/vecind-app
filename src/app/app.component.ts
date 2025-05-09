@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     { title: 'Mi Perfil', url: '/mi-perfil', icon: 'person' },
     { title: 'Noticias', url: '/noticias', icon: 'newspaper' },
     { title: 'Certificados', url: '/certificados', icon: 'document-text' },
-    { title: 'Hacerme Socio', url: '/solicitud-socio', icon: 'people' },
+    { title: 'Solicitar Membresía', url: '/mantenedores/gestion-socios/solicitar-membresia', icon: 'people' },
   ];
   
   private menuSocio: MenuOption[] = [

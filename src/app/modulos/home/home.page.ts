@@ -42,7 +42,7 @@ export class HomePage implements OnInit {
     { 
       title: 'Hacerme Socio', 
       icon: 'people-outline', 
-      route: '/solicitud-socio'
+      route: '/mantenedores/gestion-socios/solicitar-membresia'
     }
   ];
 

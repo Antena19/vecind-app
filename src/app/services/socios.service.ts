@@ -49,8 +49,14 @@ export class SociosService {
     solicitarMembresia(solicitud: SolicitudMembresia): Observable<{ mensaje: string }> {
         const formData = new FormData();
         formData.append('rut', solicitud.rut.toString());
-        formData.append('documentoIdentidad', solicitud.documentoIdentidad);
-        formData.append('documentoDomicilio', solicitud.documentoDomicilio);
+        
+        if (solicitud.documentoIdentidad) {
+            formData.append('documentoIdentidad', solicitud.documentoIdentidad);
+        }
+        
+        if (solicitud.documentoDomicilio) {
+            formData.append('documentoDomicilio', solicitud.documentoDomicilio);
+        }
 
         return this.http.post<{ mensaje: string }>(`${this.apiUrl}/solicitar`, formData);
     }

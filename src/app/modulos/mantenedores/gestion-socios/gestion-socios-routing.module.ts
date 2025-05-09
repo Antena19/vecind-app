@@ -1,6 +1,7 @@
 // gestion-socios-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../../../guards/auth.guard';
 
 // Importar los componentes
 import { GestionSociosComponent } from './gestion-socios/gestion-socios.component';
@@ -14,31 +15,45 @@ import { GestionSolicitudesComponent } from './gestion-solicitudes/gestion-solic
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./gestion-socios/gestion-socios.component').then(m => m.GestionSociosComponent)
+    loadComponent: () => import('./gestion-socios/gestion-socios.component').then(m => m.GestionSociosComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'lista-socios',
-    loadComponent: () => import('./lista-socios/lista-socios.component').then(m => m.ListaSociosComponent)
+    loadComponent: () => import('./lista-socios/lista-socios.component').then(m => m.ListaSociosComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'agregar-socio',
-    loadComponent: () => import('./agregar-socio/agregar-socio.component').then(m => m.AgregarSocioComponent)
+    loadComponent: () => import('./agregar-socio/agregar-socio.component').then(m => m.AgregarSocioComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'editar/:id',
-    loadComponent: () => import('./editar-socio/editar-socio.component').then(m => m.EditarSocioComponent)
+    loadComponent: () => import('./editar-socio/editar-socio.component').then(m => m.EditarSocioComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'detalle/:id',
-    loadComponent: () => import('./detalle-socio/detalle-socio.component').then(m => m.DetalleSocioComponent)
+    loadComponent: () => import('./detalle-socio/detalle-socio.component').then(m => m.DetalleSocioComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'socio'] }
   },
   {
     path: 'solicitudes',
-    loadComponent: () => import('./solicitudes-membresia/solicitudes-membresia.component').then(m => m.SolicitudesMembresiaComponent)
+    loadComponent: () => import('./solicitudes-membresia/solicitudes-membresia.component').then(m => m.SolicitudesMembresiaComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
-    path: 'gestion-solicitudes',
-    loadComponent: () => import('./gestion-solicitudes/gestion-solicitudes.component').then(m => m.GestionSolicitudesComponent)
+    path: 'solicitar-membresia',
+    loadComponent: () => import('./solicitar-membresia/solicitar-membresia.component').then(m => m.SolicitarMembresiaComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['vecino'] }
   }
 ];
 
