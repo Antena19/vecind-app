@@ -51,11 +51,11 @@ export class SociosService {
         formData.append('rut', solicitud.rut.toString());
         
         if (solicitud.documentoIdentidad) {
-            formData.append('documentoIdentidad', solicitud.documentoIdentidad);
+        formData.append('documentoIdentidad', solicitud.documentoIdentidad);
         }
         
         if (solicitud.documentoDomicilio) {
-            formData.append('documentoDomicilio', solicitud.documentoDomicilio);
+        formData.append('documentoDomicilio', solicitud.documentoDomicilio);
         }
 
         return this.http.post<{ mensaje: string }>(`${this.apiUrl}/solicitar`, formData);
